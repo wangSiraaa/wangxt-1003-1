@@ -57,25 +57,44 @@ function AppContent() {
   const [user, setUser] = useState(null);
   const [collapsed, setCollapsed] = useState(false);
 
+  const getDefaultRoute = (role) => {
+    const defaults = {
+      customer_service: '/customer-service',
+      warehouse: '/warehouse',
+      anchor_ops: '/product-warning',
+      finance: '/refund'
+    };
+    return defaults[role] || '/dashboard';
+  };
+
   useEffect(() => {
     const token = localStorage.getItem('token');
     const userStr = localStorage.getItem('user');
     if (token && userStr) {
-      setUser(JSON.parse(userStr));
-    } else {
-      navigate('/login');
+      const parsedUser = JSON.parse(userStr);
+      setUser(parsedUser);
+      if (window.location.pathname === '/login') {
+        navigate(getDefaultRoute(parsedUser.role), { replace: true });
+      }
+    } else if (window.location.pathname !== '/login') {
+      navigate('/login', { replace: true });
     }
   }, [navigate]);
+
+  const handleLogin = (u) => {
+    setUser(u);
+    navigate(getDefaultRoute(u.role), { replace: true });
+  };
 
   const handleLogout = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
     setUser(null);
-    navigate('/login');
+    navigate('/login', { replace: true });
   };
 
   if (!user) {
-    return <Routes><Route path="/login" element={<Login onLogin={(u) => setUser(u)} />} /><Route path="*" element={<Navigate to="/login" />} /></Routes>;
+    return <Routes><Route path="/login" element={<Login onLogin={handleLogin} />} /><Route path="*" element={<Navigate to="/login" replace />} /></Routes>;
   }
 
   const menuItems = roleMenus[user.role] || [];
@@ -114,7 +133,7 @@ function AppContent() {
         <Content style={{ background: '#f0f2f5' }}>
           <div className="content-wrapper">
             <Routes>
-              <Route path="/login" element={<Login onLogin={(u) => { setUser(u); navigate('/dashboard'); }} />} />
+              <Route path="/login" element={<Navigate to={getDefaultRoute(user.role)} replace />} />
               <Route path="/dashboard" element={<Dashboard user={user} />} />
               <Route path="/customer-service" element={<CustomerService user={user} />} />
               <Route path="/warehouse" element={<Warehouse user={user} />} />
@@ -123,7 +142,7 @@ function AppContent() {
               <Route path="/anchor-sessions" element={<AnchorSessions user={user} />} />
               <Route path="/reconciliation" element={<Reconciliation user={user} />} />
               <Route path="/after-sale/:afterSaleNo" element={<AfterSaleDetail user={user} />} />
-              <Route path="*" element={<Navigate to="/dashboard" />} />
+              <Route path="*" element={<Navigate to={getDefaultRoute(user.role)} replace />} />
             </Routes>
           </div>
         </Content>
