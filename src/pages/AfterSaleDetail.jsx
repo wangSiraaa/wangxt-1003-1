@@ -29,7 +29,7 @@ import {
   ClockCircleOutlined,
   ExclamationCircleOutlined,
   DollarOutlined,
-  PackageOutlined,
+  InboxOutlined,
   UserOutlined,
   FileTextOutlined
 } from '@ant-design/icons';
@@ -184,7 +184,7 @@ function AfterSaleDetail({ user }) {
         title: '退货入库',
         description: inventory?.received_at ? dayjs(inventory.received_at).format('YYYY-MM-DD HH:mm') : (afterSale.status === 'pending_inventory' || afterSale.status === 'inventory_received' || afterSale.status === 'qc_pass' || afterSale.status === 'qc_rejected' ? '待仓库处理' : '待开始'),
         status: afterSale.status === 'pending_inventory' ? 'process' : (inventory?.status === 'received' || inventory?.status === 'qc_pass' ? 'finish' : (afterSale.status === 'qc_rejected' || afterSale.status === 'returned_to_customer' ? 'error' : 'wait')),
-        icon: <PackageOutlined />
+        icon: <InboxOutlined />
       });
 
       steps.push({
@@ -758,7 +758,7 @@ function AfterSaleDetail({ user }) {
               </Row>
               <Divider style={{ margin: '8px 0' }} />
               <Row align="middle">
-                <Col span={4}><PackageOutlined style={{ color: roleColors.warehouse }} /></Col>
+                <Col span={4}><InboxOutlined style={{ color: roleColors.warehouse }} /></Col>
                 <Col span={20}>
                   <Text strong style={{ color: roleColors.warehouse }}>仓库</Text>
                   <div><Text type="secondary">{inventory?.received_by || inventory?.qc_by || '待处理'}</Text></div>

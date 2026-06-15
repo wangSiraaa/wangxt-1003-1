@@ -5,7 +5,7 @@ import {
   UserOutlined,
   DashboardOutlined,
   ShoppingCartOutlined,
-  WarehouseOutlined,
+  InboxOutlined,
   DollarOutlined,
   WarningOutlined,
   VideoCameraOutlined,
@@ -31,7 +31,7 @@ const roleMenus = {
   ],
   warehouse: [
     { key: '/dashboard', icon: <DashboardOutlined />, label: '总览' },
-    { key: '/warehouse', icon: <WarehouseOutlined />, label: '仓库验收' }
+    { key: '/warehouse', icon: <InboxOutlined />, label: '仓库验收' }
   ],
   anchor_ops: [
     { key: '/dashboard', icon: <DashboardOutlined />, label: '总览' },

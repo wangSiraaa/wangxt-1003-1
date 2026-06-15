@@ -72,14 +72,14 @@ function Login({ onLogin }) {
           <Form.Item
             name="username"
             label="用户名"
-            rules={[{ required: true, message: '请输入用户名' }}
+            rules={[{ required: true, message: '请输入用户名' }]}
           >
             <Input prefix={<UserOutlined />} placeholder="请输入用户名" size="large" />
           </Form.Item>
           <Form.Item
             name="password"
             label="密码"
-            rules={[{ required: true, message: '请输入密码' }}
+            rules={[{ required: true, message: '请输入密码' }]}
           >
             <Input.Password prefix={<LockOutlined />} placeholder="请输入密码" size="large" />
           </Form.Item>
